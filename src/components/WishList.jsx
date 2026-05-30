@@ -93,7 +93,8 @@ export default function WishList() {
             هدايا لدعم البطل
           </h2>
           <p className="mt-4 font-cairo text-magic-parchment/70 text-sm sm:text-base max-w-md mx-auto">
-            هدايا اختيارية بالكامل… لكنها تزيد فُرص نجاح المناقشة بنسبة 73%.
+            هدايا اختيارية بالكامل حضوركم لوحده كافي… لكنها تزيد فُرص نجاح
+            المناقشة بنسبة 73%.
           </p>
         </motion.div>
 
@@ -102,47 +103,47 @@ export default function WishList() {
           style={{ direction: "ltr" }}
         >
           <div className="marquee-track">
-          {items.map((a, i) => (
-            <motion.div
-              key={`${a.tag}-${i}`}
-              whileHover={{ y: -8, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 240, damping: 20 }}
-              className="shrink-0 w-[230px] sm:w-[260px] glass-card rounded-2xl p-5 relative overflow-hidden group ml-5"
-              style={{ direction: "rtl" }}
-            >
-              {/* accent gradient backdrop */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${a.accent} opacity-50 group-hover:opacity-80 transition-opacity duration-500`}
-              />
-
-              {/* glow on hover */}
-              <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none"
-                style={{
-                  background:
-                    "radial-gradient(circle at 50% 0%, rgba(245, 215, 110, 0.25) 0%, transparent 65%)",
-                }}
-              />
-
-              <div className="relative">
-                {/* product image (falls back to emoji if the file is missing) */}
-                <ArtifactImage a={a} />
-
+            {items.map((a, i) => (
+              <motion.div
+                key={`${a.tag}-${i}`}
+                whileHover={{ y: -8, scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 240, damping: 20 }}
+                className="shrink-0 w-[230px] sm:w-[260px] glass-card rounded-2xl p-5 relative overflow-hidden group ml-5"
+                style={{ direction: "rtl" }}
+              >
+                {/* accent gradient backdrop */}
                 <div
-                  className="font-cinzel text-[9px] tracking-[0.3em] text-magic-gold/60 mb-1"
-                  style={{ direction: "ltr" }}
-                >
-                  {a.tag}
+                  className={`absolute inset-0 bg-gradient-to-br ${a.accent} opacity-50 group-hover:opacity-80 transition-opacity duration-500`}
+                />
+
+                {/* glow on hover */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none"
+                  style={{
+                    background:
+                      "radial-gradient(circle at 50% 0%, rgba(245, 215, 110, 0.25) 0%, transparent 65%)",
+                  }}
+                />
+
+                <div className="relative">
+                  {/* product image (falls back to emoji if the file is missing) */}
+                  <ArtifactImage a={a} />
+
+                  <div
+                    className="font-cinzel text-[9px] tracking-[0.3em] text-magic-gold/60 mb-1"
+                    style={{ direction: "ltr" }}
+                  >
+                    {a.tag}
+                  </div>
+                  <div className="font-changa text-lg gold-text font-bold leading-snug">
+                    {a.title}
+                  </div>
+                  <div className="mt-2 text-sm text-magic-parchment/75 font-cairo leading-relaxed">
+                    {a.desc}
+                  </div>
                 </div>
-                <div className="font-changa text-lg gold-text font-bold leading-snug">
-                  {a.title}
-                </div>
-                <div className="mt-2 text-sm text-magic-parchment/75 font-cairo leading-relaxed">
-                  {a.desc}
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
           </div>
         </div>
 
