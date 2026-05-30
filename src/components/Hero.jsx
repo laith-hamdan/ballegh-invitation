@@ -118,24 +118,18 @@ export default function Hero({ start = true, onStart }) {
               style={{ direction: "ltr" }}
             ></motion.span>
 
-            {/* aura behind title */}
+            {/* title — solid gold (no gradient text-clip, which clips Arabic
+                glyphs on iOS), clearest and matches the other section titles */}
             <div className="relative">
-              <div
-                className="absolute inset-0 -inset-x-12 -inset-y-8 blur-3xl"
-                style={{
-                  background:
-                    "radial-gradient(ellipse, rgba(245, 215, 110, 0.35) 0%, rgba(159, 122, 234, 0.25) 40%, transparent 70%)",
-                }}
-              />
               <motion.h1
-                initial={{ letterSpacing: "0.4em", opacity: 0 }}
-                animate={{ letterSpacing: "0.02em", opacity: 1 }}
+                initial={{ opacity: 0, scale: 0.94 }}
+                animate={{ opacity: 1, scale: 1 }}
                 transition={{
                   delay: 0.2,
-                  duration: 1.6,
+                  duration: 1.4,
                   ease: [0.2, 0.8, 0.2, 1],
                 }}
-                className="relative font-changa font-extrabold text-[2.1rem] sm:text-6xl md:text-7xl magic-text leading-[1.5] sm:leading-[1.3] py-2"
+                className="relative font-changa font-extrabold text-[2.1rem] sm:text-6xl md:text-7xl gold-text leading-[1.5] sm:leading-[1.3] py-2"
               >
                 دعوة لحضور مناقشة مشروع تخرج ليث حمدان
               </motion.h1>
