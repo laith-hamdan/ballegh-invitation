@@ -85,6 +85,8 @@ export default function LoadingScreen({ onComplete }) {
                     <img
                       src="/profile.png"
                       alt="ليث حمدان"
+                      decoding="async"
+                      fetchpriority="high"
                       className="w-full h-full object-cover"
                     />
                   </div>

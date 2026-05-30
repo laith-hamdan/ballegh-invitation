@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 
 const CODE_SNIPPETS = [
@@ -22,8 +22,27 @@ function seededRandom(seed) {
 }
 
 export default function MagicalBackground() {
+  // far fewer animated elements on phones — this is the main mobile lag source
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined'
+      ? window.matchMedia('(max-width: 820px)').matches
+      : false
+  )
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 820px)')
+    const onChange = () => setIsMobile(mq.matches)
+    onChange()
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
+
+  const counts = isMobile
+    ? { stars: 26, particles: 8, code: 4 }
+    : { stars: 80, particles: 28, code: 14 }
+
   const stars = useMemo(() => {
-    return Array.from({ length: 80 }, (_, i) => ({
+    return Array.from({ length: counts.stars }, (_, i) => ({
       id: i,
       x: seededRandom(i + 1) * 100,
       y: seededRandom(i + 100) * 100,
@@ -31,10 +50,10 @@ export default function MagicalBackground() {
       delay: seededRandom(i + 300) * 5,
       duration: seededRandom(i + 400) * 3 + 2,
     }))
-  }, [])
+  }, [counts.stars])
 
   const particles = useMemo(() => {
-    return Array.from({ length: 28 }, (_, i) => ({
+    return Array.from({ length: counts.particles }, (_, i) => ({
       id: i,
       x: seededRandom(i + 500) * 100,
       y: seededRandom(i + 600) * 100,
@@ -44,10 +63,10 @@ export default function MagicalBackground() {
       duration: seededRandom(i + 1000) * 12 + 10,
       drift: seededRandom(i + 1100) * 60 - 30,
     }))
-  }, [])
+  }, [counts.particles])
 
   const codeSnippets = useMemo(() => {
-    return Array.from({ length: 14 }, (_, i) => ({
+    return Array.from({ length: counts.code }, (_, i) => ({
       id: i,
       x: seededRandom(i + 1200) * 100,
       y: seededRandom(i + 1300) * 100,
@@ -55,7 +74,7 @@ export default function MagicalBackground() {
       delay: seededRandom(i + 1400) * 6,
       duration: seededRandom(i + 1500) * 8 + 8,
     }))
-  }, [])
+  }, [counts.code])
 
   return (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
@@ -70,29 +89,32 @@ export default function MagicalBackground() {
         }}
       />
 
-      {/* fog layers */}
+      {/* fog layers — animated on desktop, static on mobile (animating a
+          full-screen blur is one of the costliest things on phones) */}
       <motion.div
         className="absolute inset-0 opacity-40"
-        animate={{ x: [0, 60, 0], y: [0, -20, 0] }}
-        transition={{ duration: 30, repeat: Infinity, ease: 'easeInOut' }}
+        animate={isMobile ? undefined : { x: [0, 60, 0], y: [0, -20, 0] }}
+        transition={isMobile ? undefined : { duration: 30, repeat: Infinity, ease: 'easeInOut' }}
         style={{
           background:
             'radial-gradient(ellipse 50% 30% at 20% 30%, rgba(159, 122, 234, 0.10) 0%, transparent 50%),' +
             'radial-gradient(ellipse 40% 25% at 80% 70%, rgba(212, 175, 55, 0.06) 0%, transparent 50%)',
-          filter: 'blur(40px)',
+          filter: isMobile ? 'blur(24px)' : 'blur(40px)',
         }}
       />
-      <motion.div
-        className="absolute inset-0 opacity-30"
-        animate={{ x: [0, -40, 0], y: [0, 30, 0] }}
-        transition={{ duration: 40, repeat: Infinity, ease: 'easeInOut' }}
-        style={{
-          background:
-            'radial-gradient(ellipse 60% 40% at 70% 20%, rgba(10, 10, 70, 0.5) 0%, transparent 60%),' +
-            'radial-gradient(ellipse 50% 35% at 30% 80%, rgba(107, 70, 193, 0.08) 0%, transparent 60%)',
-          filter: 'blur(50px)',
-        }}
-      />
+      {!isMobile && (
+        <motion.div
+          className="absolute inset-0 opacity-30"
+          animate={{ x: [0, -40, 0], y: [0, 30, 0] }}
+          transition={{ duration: 40, repeat: Infinity, ease: 'easeInOut' }}
+          style={{
+            background:
+              'radial-gradient(ellipse 60% 40% at 70% 20%, rgba(10, 10, 70, 0.5) 0%, transparent 60%),' +
+              'radial-gradient(ellipse 50% 35% at 30% 80%, rgba(107, 70, 193, 0.08) 0%, transparent 60%)',
+            filter: 'blur(50px)',
+          }}
+        />
+      )}
 
       {/* stars */}
       {stars.map((s) => (

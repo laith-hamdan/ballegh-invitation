@@ -57,6 +57,8 @@ export default function ProfileSection() {
                   <img
                     src="/profile.png"
                     alt="ليث حمدان"
+                    decoding="async"
+                    loading="lazy"
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     onError={() => setImgFailed(true)}
                   />

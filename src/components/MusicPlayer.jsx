@@ -32,7 +32,7 @@ export default function MusicPlayer() {
         ref={audioRef}
         src="/theme.mp3"
         loop
-        preload="auto"
+        preload="none"
         playsInline
       />
 
