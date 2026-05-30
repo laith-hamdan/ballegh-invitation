@@ -73,27 +73,48 @@ export default function GoldenSnitch() {
         whileHover={{ scale: 1.25 }}
         whileTap={{ scale: 0.8 }}
       >
-        <motion.span
-          animate={{ rotate: [-12, 12, -12], y: [0, -3, 0] }}
-          transition={{ duration: 0.8, repeat: Infinity, ease: "easeInOut" }}
-          className="block text-2xl sm:text-3xl select-none drop-shadow-[0_0_10px_rgba(245,215,110,0.9)]"
-          aria-hidden
-        >
-          🟡
-        </motion.span>
-        {/* little wings */}
-        <span
-          className="absolute -top-1 -left-2 text-[10px] opacity-80 select-none"
-          aria-hidden
-        >
-          🪽
-        </span>
-        <span
-          className="absolute -top-1 -right-2 text-[10px] opacity-80 -scale-x-100 select-none"
-          aria-hidden
-        >
-          🪽
-        </span>
+        {/* CSS-drawn snitch: golden ball + two flapping wings (no emoji, so it
+            renders identically on iOS where the wing emoji shows as tofu) */}
+        <div className="relative w-6 h-6" aria-hidden>
+          {/* left wing */}
+          <motion.div
+            animate={{ rotateZ: [-18, -42, -18] }}
+            transition={{ duration: 0.4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-1/2 right-1/2 origin-right"
+            style={{
+              width: 16,
+              height: 9,
+              borderRadius: "100% 0 100% 0",
+              background:
+                "linear-gradient(90deg, rgba(255,255,255,0.95), rgba(245,215,110,0.5))",
+              boxShadow: "0 0 6px rgba(245,215,110,0.7)",
+            }}
+          />
+          {/* right wing */}
+          <motion.div
+            animate={{ rotateZ: [18, 42, 18] }}
+            transition={{ duration: 0.4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-1/2 left-1/2 origin-left"
+            style={{
+              width: 16,
+              height: 9,
+              borderRadius: "0 100% 0 100%",
+              background:
+                "linear-gradient(270deg, rgba(255,255,255,0.95), rgba(245,215,110,0.5))",
+              boxShadow: "0 0 6px rgba(245,215,110,0.7)",
+            }}
+          />
+          {/* golden ball */}
+          <div
+            className="absolute inset-0 rounded-full"
+            style={{
+              background:
+                "radial-gradient(circle at 35% 30%, #fff8d8 0%, #f5d76e 45%, #d4af37 100%)",
+              boxShadow:
+                "0 0 8px rgba(245,215,110,0.95), 0 0 16px rgba(212,175,55,0.7)",
+            }}
+          />
+        </div>
       </motion.button>
 
       {/* catch toast */}

@@ -135,7 +135,7 @@ export default function Hero({ start = true, onStart }) {
                   duration: 1.6,
                   ease: [0.2, 0.8, 0.2, 1],
                 }}
-                className="relative font-changa font-extrabold text-6xl sm:text-7xl md:text-8xl magic-text leading-tight"
+                className="relative font-changa font-extrabold text-5xl sm:text-7xl md:text-8xl magic-text leading-[1.35] sm:leading-tight pb-2"
               >
                 دعوة لحضور مناقشة مشروع تخرج ليث حمدان
               </motion.h1>

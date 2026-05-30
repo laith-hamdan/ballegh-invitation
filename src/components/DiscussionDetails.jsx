@@ -134,7 +134,7 @@ export default function DiscussionDetails() {
             className="magic-btn px-7 py-3.5 rounded-full font-changa text-base font-semibold flex items-center gap-3"
           >
             <span className="text-xl">🗺️</span>
-            <span>افتح الموقع السحري</span>
+            <span>افتح الموقع على خرائط جوجل</span>
           </a>
         </motion.div>
       </div>
